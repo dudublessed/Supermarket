@@ -20,9 +20,19 @@ produtos_disponiveis = [
 if __name__ == "__main__":
     
     carrinho = Carrinho()
-    
+        
     # Generates a random value of the user money
-    userMoney = random.randint(5, 800)
+    nubank = random.randint(5, 800)
+    itau = random.randint(5, 200)
+    bradesco = random.randint(5, 100)
+    santander = random.randint(5, 300)
+    
+    banks = [
+        ["NuBank", nubank],
+        ["Itaú", itau],
+        ["Bradesco", bradesco],
+        ["Santander", santander]
+    ]
     
     print("")
     print("________________________")
@@ -43,12 +53,26 @@ if __name__ == "__main__":
             break
         except ValueError:
             print("Entrada inválida. A idade deve ser um valor inteiro.")
-            
-    print(" ")
-    print("________________________")
-    print(" ")
     
-    pessoa = Pessoa(userName, userAge, userMoney)
+    while True:
+        userBank = input("Qual o seu banco? (NuBank), (Itaú), (Bradesco), (Santander) \n")
+        
+        for banco in banks:
+            if userBank.lower() == banco[0].lower(): 
+                userMoney = banco[1]
+                print(" ")
+                print(f"Banco: {banco[0]}")
+                print(f"Saldo: R$ {userMoney}")
+                print(" ")
+                print("________________________")
+                print(" ")
+                break
+        else:
+            print("Opção inválida. Selecione um dentre os bancos existentes.")
+            continue
+        break
+    
+    pessoa = Pessoa(userName, userAge, userBank, userMoney)
     
     print(f"Olá {pessoa.name}!")
     start_decision = input("Deseja ver os produtos disponíveis? Digite 'Sim' \n")

@@ -91,22 +91,27 @@ class Carrinho:
                     
 
     def remover_produto(self):
-
-
         while True:
             prodName = input("Digite o nome do produto a ser removido: \n")
-
+            prodName_lower = prodName.lower()
+        
 
             item_found = False
+        
+
             for i, (produto, quantidade) in enumerate(self.itens_carrinho):
-                if produto.name.lower() == prodName.lower():
+                if produto.name.lower() == prodName_lower:
+                    item_found = True
                     if quantidade > 1:
                         self.itens_carrinho[i] = (produto, quantidade - 1)
-                else: 
-                    del self.itens_carrinho[i]
+                    else:
+                        del self.itens_carrinho[i]
                 print(f"O produto '{prodName}' foi removido do seu carrinho.")
                 break
-            else:
+        
+            if not item_found:
                 print("Item inexistente ou não se encontra no seu carrinho. Por favor, tente novamente.")
-            break
+            else:
+                break
+
                 
