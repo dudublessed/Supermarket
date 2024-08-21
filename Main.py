@@ -5,12 +5,12 @@ from Carrinho import Carrinho
 from Pessoa import Pessoa
 
 produtos_disponiveis = [
-    Produtos("Pão", 0.75, "Panificação", 12),
+    Produtos("Pao", 0.75, "Panificação", 12),
     Produtos("Bolo Formigueiro", 15.00, "Panificação", 2),
     Produtos("Bolo de Chocolate", 20.00, "Panificação", 4),
-    Produtos("Carne Suína", 45.00, "Carnes", 7),
+    Produtos("Carne Suina", 45.00, "Carnes", 7),
     Produtos("Carne Bovina", 50.00, "Carnes", 8),
-    Produtos("Maça", 3.00, "Frutas", 25),
+    Produtos("Maca", 3.00, "Frutas", 25),
     Produtos("Banana da Terra", 2.00, "Frutas", 24),
     Produtos("Banana Prata", 2.50, "Frutas", 18)
 ]
@@ -19,7 +19,7 @@ produtos_disponiveis = [
 
 if __name__ == "__main__":
     
-    carrinho = Carrinho()
+    carrinho = Carrinho(0)
         
     # Generates a random value of the user money
     nubank = random.randint(5, 800)
@@ -72,7 +72,7 @@ if __name__ == "__main__":
             continue
         break
     
-    pessoa = Pessoa(userName, userAge, userBank, userMoney)
+    pessoa = Pessoa(userName, userAge, userBank, userMoney, carrinho)
     
     print(f"Olá {pessoa.name}!")
     start_decision = input("Deseja ver os produtos disponíveis? Digite 'Sim' \n")
@@ -84,14 +84,18 @@ if __name__ == "__main__":
         if view_decision.lower() == "sim":
             carrinho.mostrar_carrinho()
             
-            remove_decision = input("Deseja retirar algum item de seu carrinho? Digite 'Sim' \n")
-            if remove_decision.lower() == "sim":
-                carrinho.remover_produto()
-                carrinho.mostrar_carrinho()
-                # pessoa.pay_cart()
-            #else:
-               # pessoa.pay_cart()
+            while True:
+                remove_decision = input("Deseja retirar algum item de seu carrinho? Digite 'Sim' ou 'Não' \n")
+                if remove_decision.lower() == "sim":
+                    carrinho.remover_produto()
+                    carrinho.mostrar_carrinho()
+                    continue
+                elif remove_decision.lower() == "não":
+                    pessoa.pay_cart()
+                    print("Muito obrigado por utilizar o Python Market!")
+                    break
         else: 
+            pessoa.pay_cart()
             print("Muito obrigado por utilizar o Python Market!")
         
     

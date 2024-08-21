@@ -1,17 +1,12 @@
-from Produtos import Produtos
-
-class Carrinho:
-    
-    # Creating the cart list
-    def __init__(self):
-        self.itens_carrinho = []
-        
-        
+from Produtos import Produtos 
         
     # Adding products to the cart
 class Carrinho:
-    def __init__(self):
+    
+    
+    def __init__(self, cart_value):
         self.itens_carrinho = []
+        self.cart_value = cart_value
         
     def adicionar_produto_carrinho(self, produto):
         if isinstance(produto, Produtos):
@@ -23,14 +18,11 @@ class Carrinho:
                 self.itens_carrinho.append((produto, 1))
         else:
             print("O item deve ser um produto.")
-
-            
             
             
     # Displaying the itens on the cart list
     def mostrar_carrinho(self):
-        cart_value = 0
-
+        
         if not self.itens_carrinho:
             print("O carrinho está vazio...")
         else:
@@ -40,14 +32,17 @@ class Carrinho:
             print("Conteúdo do carrinho:")
             for produto, quantidade in self.itens_carrinho:
                 print(f"- {produto.name}, R$ {produto.value:.2f}, Quantidade: {quantidade}")
-                cart_value += produto.value * quantidade
+                self.cart_value += produto.value * quantidade
             print("__")
             print(" ")
-            print(f"Valor total do carrinho: R$ {cart_value:.2f}")
+            print(f"Valor total do carrinho: R$ {self.cart_value:.2f}")
             print("__")
             print(" ")
             print("________________________")
+            print(" ")
                 
+    def mostrar_valor_carrinho(self):
+        return self.cart_value
                 
                 
     # Showing avaiable products and calling the funcion that adds products to the cart according to the user selection            
@@ -73,10 +68,20 @@ class Carrinho:
                     break
         
             if produto_encontrado:
-                self.adicionar_produto_carrinho(produto_encontrado)
-                print(f"{produto_encontrado.name} foi adicionado ao seu carrinho!")
+                if produto_encontrado.quantity > 0:
+                    self.adicionar_produto_carrinho(produto_encontrado)
+                    produto_encontrado.quantity -= 1
+                    print(f"{produto_encontrado.name} foi adicionado ao seu carrinho!")
+
+                    if produto_encontrado.quantity == 0:
+                        produtos_disponiveis.remove(produto_encontrado)
+                        print(f"{produto_encontrado.name} está fora de estoque e foi removido da lista de produtos disponíveis.")
+                else:
+                    print(f"O produto {produto_encontrado.name} está fora de estoque.")
+        
             else:
                 print("Produto não encontrado, tente novamente.")
+                continue
         
             while True: 
                 want_decision = input("Deseja adicionar outro produto ao seu carrinho? Digite 'Sim' ou 'Não': \n")
