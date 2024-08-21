@@ -52,9 +52,8 @@ class Carrinho:
                 
     # Showing avaiable products and calling the funcion that adds products to the cart according to the user selection            
     def listar_produtos(self, produtos_disponiveis):
-        want = True
         
-        while want:
+        while True:
             print(" ")
             print("________________________")
             print(" ")
@@ -79,10 +78,35 @@ class Carrinho:
             else:
                 print("Produto não encontrado, tente novamente.")
         
-            want_decision = input("Deseja adicionar outro produto ao seu carrinho? Digite 'sim' ou 'não': \n")
-        
-            if want_decision.lower() == "não":
-                want = False
-            elif want_decision.lower() != "sim":
-                print("Opção inválida...")
-                want = False
+            while True: 
+                want_decision = input("Deseja adicionar outro produto ao seu carrinho? Digite 'Sim' ou 'Não': \n")
+
+                if want_decision.lower() == "sim":
+                    break
+                if want_decision.lower() == "não":
+                    return
+                elif want_decision.lower() != "sim":
+                    print("Opção inválida...")
+                    continue
+                    
+
+    def remover_produto(self):
+
+
+        while True:
+            prodName = input("Digite o nome do produto a ser removido: \n")
+
+
+            item_found = False
+            for i, (produto, quantidade) in enumerate(self.itens_carrinho):
+                if produto.name.lower() == prodName.lower():
+                    if quantidade > 1:
+                        self.itens_carrinho[i] = (produto, quantidade - 1)
+                else: 
+                    del self.itens_carrinho[i]
+                print(f"O produto '{prodName}' foi removido do seu carrinho.")
+                break
+            else:
+                print("Item inexistente ou não se encontra no seu carrinho. Por favor, tente novamente.")
+            break
+                
