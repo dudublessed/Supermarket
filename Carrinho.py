@@ -32,7 +32,7 @@ class Carrinho:
             print("Conteúdo do carrinho:")
             for produto, quantidade in self.itens_carrinho:
                 print(f"- {produto.name}, R$ {produto.value:.2f}, Quantidade: {quantidade}")
-                self.cart_value += produto.value * quantidade
+                self.cart_value = produto.value * quantidade
             print("__")
             print(" ")
             print(f"Valor total do carrinho: R$ {self.cart_value:.2f}")
